@@ -1,0 +1,833 @@
+\documentclass[a4paper,12pt,oneside]{book}
+
+% =============================================================================
+% ENCODING AND LANGUAGE
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% =============================================================================
+% FONTS AND TYPOGRAPHY
+% =============================================================================
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% =============================================================================
+% PAGE LAYOUT AND GEOMETRY
+% =============================================================================
+\usepackage{geometry}
+\geometry{
+	top=2.5cm,
+	bottom=2.5cm,
+	left=2.5cm,
+	right=2.5cm,
+	headheight=15pt
+}
+
+% =============================================================================
+% GRAPHICS AND COLORS
+% =============================================================================
+\usepackage{graphicx}
+\usepackage{xcolor}
+\newcommand{\hl}[1]{%
+	\colorbox{yellow!50}{#1}%
+}
+% =============================================================================
+% MATHEMATICS
+% =============================================================================
+\usepackage{amsmath, amssymb}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+
+% =============================================================================
+% BOXES AND ENVIRONMENTS
+% =============================================================================
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable,skins}
+
+% =============================================================================
+% HEADERS AND FOOTERS
+% =============================================================================
+\usepackage{fancyhdr}
+
+% =============================================================================
+% HYPERLINKS
+% =============================================================================
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue,
+	citecolor=blue,
+	bookmarksdepth=3,
+	pdfhighlight=/I,
+	pdftitle={Gaya Math},
+	pdfauthor={SoG},
+	pdfsubject={Mathématiques},
+	pdfkeywords={mathématiques, algèbre, analyse}
+}
+
+% =============================================================================
+% SYMBOLS AND DECORATIONS
+% =============================================================================
+\usepackage{pifont}
+
+% =============================================================================
+% CUSTOM MATHEMATICAL COMMANDS
+% =============================================================================
+
+% Fields and number sets
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
+% Linear algebra
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\Ker}{\mathrm{Ker}}
+\newcommand{\Imf}{\mathrm{Im}}
+\newcommand{\Com}{\mathrm{Com}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\Vect}{\mathrm{Vect}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\rg}{\mathrm{rg}}
+
+% Number theory
+\newcommand{\pgcd}{\mathrm{pgcd}}
+\newcommand{\ppcm}{\mathrm{ppcm}}
+
+% Matrix spaces
+\newcommand{\Mn}{\mathcal{M}_n(\K)}
+\newcommand{\MnC}{\mathcal{M}_n(\C)}
+
+% Characteristic polynomials
+\newcommand{\chiA}{\chi_A}
+\newcommand{\muA}{\mu_A}
+\newcommand{\PiA}{\Pi_A}
+
+% Proof end symbol
+\newcommand{\qed}{\hfill$\square$}
+
+% =============================================================================
+% PAGE STYLE CONFIGURATION
+% =============================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\hyperref[sec:sommaire]{\small Retour au sommaire}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% =============================================================================
+% TCOLORBOX STYLES
+% =============================================================================
+
+% Base style for all boxes
+\tcbset{
+	basestyle/.style={
+		enhanced,
+		breakable,
+		arc=3pt,
+		outer arc=0pt,
+		left=12pt,
+		right=12pt,
+		top=8pt,
+		bottom=8pt,
+		boxsep=5pt,
+		width=\linewidth,
+		halign=justify,
+		fonttitle=\bfseries,
+		before skip=12pt,
+		after skip=12pt,
+	}
+}
+
+% Statement box
+\newtcolorbox{statementbox}[1][]{%
+	basestyle,
+	colback=gray!8,
+	colframe=gray!60!black,
+	title={\textbf{Énoncé}},
+	title after break={\textbf{Énoncé (suite)}},
+	#1
+}
+
+% Solution box
+\newtcolorbox{solutionbox}[1][]{%
+	basestyle,
+	colback=blue!8,
+	colframe=blue!60!black,
+	title={\textbf{Solution}},
+	title after break={\textbf{Solution (suite)}},
+	#1
+}
+
+% Technique box
+\newtcolorbox{techniquebox}[1][]{%
+	basestyle,
+	colback=yellow!12,
+	colframe=orange!70!black,
+	title={\textbf{Technique à mémoriser}},
+	title after break={\textbf{Technique à mémoriser (suite)}},
+	#1
+}
+
+% Formula box
+\newtcolorbox{formbox}[1][]{%
+	basestyle,
+	colback=green!12,
+	colframe=green!60!black,
+	title={\textbf{Formulaire}},
+	title after break={\textbf{Formulaire (suite)}},
+	#1
+}
+
+% =============================================================================
+% SIMPLIFIED ENVIRONMENTS
+% =============================================================================
+\newenvironment{statement}{\begin{statementbox}}{\end{statementbox}}
+\newenvironment{solution}{\begin{solutionbox}}{\end{solutionbox}}
+\newenvironment{technique}{\begin{techniquebox}}{\end{techniquebox}}
+\newenvironment{form}{\begin{formbox}}{\end{formbox}}
+
+% =============================================================================
+% DOCUMENT CONTENT
+% =============================================================================
+\begin{document}
+	
+	% Document metadata
+	\author{SoG}
+	\title{Gaya Math}
+	\date{Juillet 2025}
+	
+	% Front matter
+	\frontmatter
+	\maketitle
+	
+	% Table of contents configuration
+	\setcounter{tocdepth}{3}
+	\setcounter{secnumdepth}{3}
+	\tableofcontents
+	\label{sec:sommaire}
+	
+	% Main content
+	\mainmatter
+	
+\section*{exercise[59]}
+\begin{statement}
+	Soit $n$ un entier naturel tel que $n \geq 2$.\\
+	Soit $E$ l’espace vectoriel des polynômes à coefficients dans $\mathbb{K}$ ($\mathbb{K} = \mathbb{R}$ ou $\mathbb{K} = \mathbb{C}$) de degré inférieur ou égal à $n$.\\
+	On pose : $\forall P \in E, \ f(P) = P - P'$.
+	\begin{enumerate}
+		\item Démontrer que $f$ est bijectif de deux manières :
+		\begin{itemize}
+			\item[(a)] sans utiliser de matrice de $f$,
+			\item[(b)] en utilisant une matrice de $f$.
+		\end{itemize}
+		\item Soit $Q \in E$. Trouver $P$ tel que $f(P) = Q$.\\
+		\textit{Indication :} si $P \in E$, quel est le polynôme $P^{(n+1)}$ ?
+		\item $f$ est-il diagonalisable ?
+	\end{enumerate}
+\end{statement}
+
+\begin{solution}
+	\begin{enumerate}
+		\item $f(E) \subset E$ :\\
+		$\forall P \in E \setminus \{0\}$, $\deg(P - P') = $?\\
+		\begin{itemize}
+			\item[(a)] $\ker f$.\\
+			Si $P \in \ker f$ alors $P - P' = 0$. $\deg(P - P') = $? 
+			\item[(b)] La matrice de $f$ dans $e$ est :
+			\[
+			A = \begin{pmatrix}
+				1 & -1 &        &        & 0 \\
+				& 1  & \ddots &        &   \\
+				&    & \ddots & -n     &   \\
+				0  &   &        & 1
+			\end{pmatrix}
+			\]
+		\end{itemize}
+		
+		\item Soit $P$ tel que $f(P) = Q$. \\
+		écrire $P = Q + P'$ et calculer $P^{(n+1)}$
+		
+		\item Quelles sont les valeurs propres de $f$ ? Qu'impliquerait la diagonalisabilité ?
+	\end{enumerate}
+\end{solution}
+
+
+\section{exercise[60]}
+	\begin{statement}
+		Soit la matrice $A = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$ et $f$ l’endomorphisme de $\mathcal{M}_2(\mathbb{R})$ défini par : $f(M) = AM$.
+		\begin{enumerate}
+			\item Déterminer une base de $\ker f$.
+			\item $f$ est-il surjectif ?
+			\item Déterminer une base de $\mathrm{Im} f$.
+			\item A-t-on $\mathcal{M}_2(\mathbb{R}) = \ker f \oplus \mathrm{Im} f$ ?
+		\end{enumerate}
+	\end{statement}
+	
+	\begin{solution}
+		\begin{enumerate}
+			\item Posons $M = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \mathcal{M}_2(\mathbb{R})$.\\
+			$f(M) = 0 \Rightarrow M = \begin{pmatrix} -2c & -2d \\ c & d \end{pmatrix}$
+			\item $\ker f \ne \{0\} \Rightarrow f$ non injectif.\\
+			$f$ est un endomorphisme d’un espace de dimension finie donc $f$ non surjectif.
+			\item la formule du rang, comment sont les colonnes de la matrice ?
+			\item Décomposer $M$ dans la base de \(\ker f\) et de \(\mathrm{Im}\)
+		\end{enumerate}
+	\end{solution}
+
+\section*{Exercice 65}
+
+\begin{statement}
+	Soit $u$ un endomorphisme d’un espace vectoriel $E$ sur le corps $\mathbb{K}$ ($\mathbb{K} = \mathbb{R}$ ou $\mathbb{K} = \mathbb{C}$). On note $\mathbb{K}[X]$ l’ensemble des polynômes à coefficients dans $\mathbb{K}$.
+	\begin{enumerate}
+		\item Démontrer que : $\forall (P,Q) \in \mathbb{K}[X] \times \mathbb{K}[X],\ (PQ)(u) = P(u) \circ Q(u)$.
+		\item 
+		\begin{itemize}
+			\item[(a)] Démontrer que : $\forall (P,Q) \in \mathbb{K}[X] \times \mathbb{K}[X],\ P(u) \circ Q(u) = Q(u) \circ P(u)$.
+			\item[(b)] Démontrer que, pour tout $(P,Q) \in \mathbb{K}[X] \times \mathbb{K}[X]$ :\\
+			\hspace*{1em} $(P$ polynôme annulateur de $u) \Rightarrow (PQ$ polynôme annulateur de $u)$
+		\end{itemize}
+		\item Soit $A = \begin{pmatrix} 1 & -1 \\ 2 & 2 \end{pmatrix}$.\\
+		Écrire le polynôme caractéristique de $A$, puis en déduire que le polynôme $R = X^4 + 2X^3 + X^2 - 4X$ est un polynôme annulateur de $A$.
+	\end{enumerate}
+\end{statement}
+
+\begin{solution}
+		\[
+		P_A(X) = \det \begin{pmatrix} X - 1 & 1 \\ -2 & X - 2 \end{pmatrix}
+		= (X - 1)(X - 2) + 2 = X^2 - 3X + 4.
+		\]
+\end{solution}
+
+\section*{Exercice 67}
+
+\begin{statement}
+	Soit la matrice
+	\[
+	M = \begin{pmatrix}
+		0 & a & c \\
+		b & 0 & c \\
+		b & -a & 0
+	\end{pmatrix}
+	\]
+	où $a,b,c$ sont des réels.\\
+	$M$ est-elle diagonalisable dans $\mathcal M_3(\mathbb R)$ ? $M$ est-elle diagonalisable dans $\mathcal M_3(\mathbb C)$ ?
+\end{statement}
+
+\begin{solution}
+	\[
+	\chi_M(\lambda) = \lambda \left( \lambda^2 + ca - ba - bc \right)
+	\]
+	
+	\begin{itemize}
+		\item \textbf{Premier cas :} $ca - ba - bc < 0$.
+		\item \textbf{Deuxième cas :} $ca - ba - bc = 0$.
+		\item \textbf{Troisième cas :} $ca - ba - bc > 0$.
+	\end{itemize}
+\end{solution}
+
+\section*{Exercice 68}
+
+\begin{statement}
+	Soit la matrice 
+	\[
+	A = \begin{pmatrix}
+		1 & -1 & 1 \\
+		-1 & 1 & -1 \\
+		1 & -1 & 1
+	\end{pmatrix}.
+	\]
+	\begin{enumerate}
+		\item Montrer que \(A\) est diagonalisable de quatre manières :
+		\begin{enumerate}
+			\item sans calcul,
+			\item en calculant directement le déterminant \(\det(\lambda I_3 - A)\) et en déterminant les sous-espaces propres,
+			\item en utilisant le rang de la matrice,
+			\item en calculant \(A^2\).
+		\end{enumerate}
+		\item On note \(f\) l’endomorphisme de \(\mathbb{R}^3\) dont la matrice dans la base canonique est \(A\).
+		Trouver une base orthonormée dans laquelle la matrice de \(f\) est diagonale.
+	\end{enumerate}
+\end{statement}
+
+\begin{solution}
+	\begin{enumerate}
+		\item 
+		\begin{enumerate}
+			\item 
+			\[
+			\chi_A(\lambda) = \det(\lambda I_3 - A) = \lambda^2 (\lambda - 3).
+			\]
+			\[
+			E_3(A) = \mathrm{Vect}\left(\begin{pmatrix}1 \\ -1 \\ 1\end{pmatrix}\right), \quad E_0(A) = \{(x,y,z) \in \mathbb{R}^3 : x - y + z = 0\}.
+			\]
+		
+			\item \(\dim E_0(A) = ?\).
+			
+			\item Calcul de \(A^2\) :
+			\[
+			A^2 = 3A,
+			\]
+			
+		\end{enumerate}
+		
+		\item Une base orthonormée de \(E_3(f)\) est 
+		\[
+		u = \frac{1}{\sqrt{3}}(1,-1,1).
+		\]
+		
+		Deux vecteurs orthogonaux de \(E_0(f)\) sont 
+		\[
+		(1,1,0), \quad (1,-1,-2).
+		\]
+		
+		En les normalisant, on pose 
+		\[
+		v = \frac{1}{\sqrt{2}}(1,1,0), \quad w = \frac{1}{\sqrt{6}}(1,-1,-2).
+		\]
+		
+		
+	\end{enumerate}
+\end{solution}
+
+\section*{Exercice 69}
+
+\begin{statement}
+	On considère la matrice 
+	\[
+	A = \begin{pmatrix}
+		0 & a & 1 \\
+		a & 0 & 1 \\
+		a & 1 & 0
+	\end{pmatrix}
+	\]
+	où \(a\) est un réel.
+	\begin{enumerate}
+		\item Déterminer le rang de \(A\).
+		\item Pour quelles valeurs de \(a\), la matrice \(A\) est-elle diagonalisable ?
+	\end{enumerate}
+\end{statement}
+
+\begin{solution}
+	\begin{enumerate}
+		\item Calcul du rang de \( A \).
+		
+		\[
+		\det A = a(a+1).
+		\]
+		
+		\textbf{Premier cas :} \(a \neq 0\) et \(a \neq -1\)\\
+		Alors \(\det A \neq 0\) donc \(A\) est inversible.\\
+		Donc \(\mathrm{rg}(A) = 3\).
+		
+		\textbf{Deuxième cas :} \(a = 0\)
+		\[
+		A = \begin{pmatrix}
+			0 & 0 & 1 \\
+			0 & 0 & 1 \\
+			0 & 1 & 0
+		\end{pmatrix}
+		\]
+		On remarque que les deux premières lignes sont colinéaires, donc \(\mathrm{rg}(A) = 2\).
+		
+		\textbf{Troisième cas :} \(a = -1\)
+		\[
+		A = \begin{pmatrix}
+			0 & -1 & 1 \\
+			-1 & 0 & 1 \\
+			-1 & 1 & 0
+		\end{pmatrix}
+		\]
+		Les deux premières colonnes de \(A\) sont non colinéaires, donc \(\mathrm{rg}(A) \geq 2\).\\
+		En calculant le déterminant : \(\det A = a(a+1) = (-1)(0) = 0\), donc \(A\) n'est pas inversible.\\
+		Donc \(\mathrm{rg}(A) = 2\).
+		
+		\item Étude de la diagonalisabilité de \( A \)
+		
+		On note \(\chi_A(X)\) le polynôme caractéristique de \(A\). On a :
+		\[
+		\chi_A(X) = (X - a - 1)(X + a)(X + 1).
+		\]
+		
+		Les racines sont donc \(a+1\), \(-a\), et \(-1\).\\
+		On étudie les cas où ces racines sont égales ou distinctes :
+		
+		\begin{itemize}
+			\item \textbf{Premier cas :} \(a \neq 1\), \(a \neq -2\) et \(a \neq -\frac{1}{2}\).\\
+			Les trois racines sont distinctes, donc \(A\) possède trois valeurs propres distinctes.\\
+			\(\Rightarrow A\) est diagonalisable.
+			
+			\item \textbf{Deuxième cas :} \(a = 1\).\\
+			Alors \(\chi_A(X) = (X - 2)(X + 1)^2\).\\
+			\(A\) est diagonalisable si et seulement si \(\dim E_{-1} = 2\), i.e. \(\mathrm{rg}(A + I_3) = 1\).
+			
+			\[
+			A + I_3 = \begin{pmatrix}
+				1 & 1 & -1 \\
+				1 & 1 & -1 \\
+				1 & 1 & -1
+			\end{pmatrix}
+			\Rightarrow \mathrm{rg}(A + I_3) = 1.
+			\]
+			Donc \(\dim E_{-1} = 2\), \(A\) est diagonalisable.
+			
+			\item \textbf{Troisième cas :} \(a = -2\).\\
+			Alors \(\chi_A(X) = (X + 1)^2 (X - 2)\).\\
+			\[
+			A + I_3 = \begin{pmatrix}
+				1 & 2 & -1 \\
+				2 & 1 & -1 \\
+				2 & 1 & -1
+			\end{pmatrix}
+			\Rightarrow \mathrm{rg}(A + I_3) = 2.
+			\]
+			Donc \(\dim E_{-1} = 1 < 2\).\\
+			Or \(-1\) est de multiplicité 2 dans \(\chi_A\).\\
+			\(\Rightarrow A\) n’est pas diagonalisable.
+			
+			\item \textbf{Quatrième cas :} \(a = -\frac{1}{2}\).\\
+			Alors \(\chi_A(X) = \left(X + \frac{1}{2}\right)^2(X + 1)\).\\
+			\[
+			A + \frac{1}{2} I_3 = \begin{pmatrix}
+				\frac{1}{2} & -\frac{1}{2} & -1 \\
+				-\frac{1}{2} & \frac{1}{2} & -1 \\
+				-\frac{1}{2} & 1 & \frac{1}{2}
+			\end{pmatrix}
+			\Rightarrow \mathrm{rg}\left(A + \frac{1}{2} I_3\right) = 2.
+			\]
+			Donc \(\dim E_{-\frac{1}{2}} = 1 < 2\), et \(-\frac{1}{2}\) est de multiplicité 2 dans \(\chi_A\).\\
+			\(\Rightarrow A\) n’est pas diagonalisable.
+		\end{itemize}
+	\end{enumerate}
+\end{solution}
+
+
+	\section*{Exercice 70}
+	
+	\begin{statement}
+		Soit 
+		\[
+		A = \begin{pmatrix}
+			0 & 0 & 1 \\
+			1 & 0 & 0 \\
+			0 & 1 & 0
+		\end{pmatrix} \in \mathcal{M}_3(\mathbb{C}).
+		\]
+		\begin{enumerate}
+			\item Déterminer les valeurs propres et les vecteurs propres de \(A\). \(A\) est-elle diagonalisable ?
+			\item Soit \((a, b, c) \in \mathbb{C}^3\) et \(B = aI_3 + bA + cA^2\), où \(I_3\) désigne la matrice identité d’ordre 3.\\
+			Déduire de la question 1. les éléments propres de \(B\).
+		\end{enumerate}
+	\end{statement}
+	
+	\begin{solution}
+		\begin{enumerate}
+			\item \[
+			\chi_A(X) = X^3 - 1 \quad \Rightarrow \quad \mathrm{Sp}(A) = \{1, j, j^2\},
+			\]
+			\[
+			E_1(A) = \ker(A - I_3) = \mathrm{Vect}\left(\begin{pmatrix}1 \\ 1 \\ 1\end{pmatrix}\right), \quad
+			\]
+			\[E_j(A) = \ker(A - jI_3) = \mathrm{Vect}\left(\begin{pmatrix}1 \\ j^2 \\ j\end{pmatrix}\right), \quad
+			\]
+			\[E_{j^2}(A) = \ker(A - j^2 I_3) = \mathrm{Vect}\left(\begin{pmatrix}1 \\ j \\ j^2\end{pmatrix}\right).
+			\]
+			
+			\item 
+			\[
+			P = \begin{pmatrix}
+				1 & 1 & 1 \\
+				1 & j^2 & j \\
+				1 & j & j^2
+			\end{pmatrix}, \quad
+			D = \begin{pmatrix}
+				1 & 0 & 0 \\
+				0 & j & 0 \\
+				0 & 0 & j^2
+			\end{pmatrix}.
+			\]
+			
+			On a alors :
+			\[
+			A = PDP^{-1} \quad \Rightarrow \quad B = aI_3 + bA + cA^2 = P(aI_3 + bD + cD^2)P^{-1}.
+			\]
+			\[
+			  = P \cdot \mathrm{diag}(Q(1), Q(j), Q(j^2)) \cdot P^{-1}.
+			\]
+			
+			\textbf{Premier cas :} les valeurs \(Q(1), Q(j), Q(j^2)\) sont toutes distinctes.\\
+		
+			\textbf{Deuxième cas :} deux valeurs propres égales parmi les trois.\\
+		
+			\textbf{Troisième cas :} \(Q(1) = Q(j) = Q(j^2)\).\\
+		
+		\end{enumerate}
+	\end{solution}
+	
+	\section*{Exercice 71}
+	\begin{statement}
+	Soit \( P \) le plan d’équation \( x + y + z = 0 \) et \( D \) la droite d’équation \( x = \frac{y}{2} = \frac{z}{3} \).
+	
+	\begin{enumerate}
+		\item Vérifier que \( \mathbb{R}^3 = P \oplus D \).
+		\item Soit \( p \) la projection vectorielle de \( \mathbb{R}^3 \) sur \( P \) parallèlement à \( D \).\\
+		Soit \( u = (x, y, z) \in \mathbb{R}^3 \).\\
+		Déterminer \( p(u) \) et donner la matrice de \( p \) dans la base canonique de \( \mathbb{R}^3 \).
+		\item Déterminer une base de \( \mathbb{R}^3 \) dans laquelle la matrice de \( p \) est diagonale.
+	\end{enumerate}
+	\end{statement}
+	\begin{solution}
+	\begin{enumerate}
+		\item \( 1 + 2 + 3 \neq 0 \).\\
+		\( \dim D + \dim P = 1 + 2 = 3 = \dim \mathbb{R}^3 \). 
+		\item Par définition \( u - p(u) \in D \).\\
+		Donc il existe \( \alpha \in \mathbb{R} \) tel que :
+		\[
+		u - p(u) = \alpha (1,2,3) \Rightarrow p(u) = (x - \alpha,\, y - 2\alpha,\, z - 3\alpha). \tag
+		\]
+		Par définition \(p(u) \in D \).\\
+		\[
+		x + y + z - 6\alpha = 0 \Rightarrow \alpha = \frac{1}{6}(x + y + z).
+		\]
+		\[
+		p(u) = \frac{1}{6}(5x - y - z,\ -2x + 4y - 2z,\ -3x - 3y + 3z).
+		\]
+		\[
+		A = \frac{1}{6} \begin{pmatrix}
+			5 & -1 & -1 \\
+			-2 & 4 & -2 \\
+			-3 & -3 & 3
+		\end{pmatrix}.
+		\]
+		
+		\item:
+		\[
+		e_1' = (1,2,3),\quad e_2' = (1,-1,0),\quad e_3' = (0,1,-1).
+		\]
+	\end{enumerate}
+	\end{solution}
+	
+\section*{Exercice 72}
+\begin{statement}
+	Soit \( n \) un entier naturel non nul.\\
+	Soit \( f \) un endomorphisme d’un espace vectoriel \( E \) de dimension \( n \), et soit \( e = (e_1, \dots, e_n) \) une base de \( E \).\\
+	On suppose que \( f(e_1) = f(e_2) = \dots = f(e_n) = v \), où \( v \) est un vecteur donné de \( E \).
+	
+	\begin{enumerate}
+		\item Donner le rang de \( f \).
+		\item \( f \) est-il diagonalisable ? (Discuter en fonction du vecteur \( v \).)
+	\end{enumerate}
+\end{statement}
+\begin{solution}
+	\begin{enumerate}
+		\item 
+		\item< Si \( f \) non nul
+		\( \chi_f(X) = X^{n - 1}(X - \lambda) \) avec \( \lambda \neq 0 \). 
+		\textbf{Premier sous-cas :} \( \lambda \neq 0 \)\\
+		\textbf{Deuxième sous-cas :} \( \lambda = 0 \)\\
+	\end{enumerate}
+\end{solution}
+
+	\section*{Exercice 73 \quad algèbre}
+	\begin{statement}
+		On pose \( A = \begin{pmatrix} 2 & 1 \\ 4 & -1 \end{pmatrix} \).
+		\begin{enumerate}
+			\item Déterminer les valeurs propres et les vecteurs propres de \( A \).
+			\item Déterminer toutes les matrices qui commutent avec la matrice \( \begin{pmatrix} 3 & 0 \\ 0 & -2 \end{pmatrix} \).\\
+			En déduire que l’ensemble des matrices qui commutent avec \( A \) est \( \mathrm{Vect}(I_2, A) \).
+		\end{enumerate}
+	\end{statement}
+	
+	\begin{solution}
+		\begin{enumerate}
+			\item \( \chi_A = (X - 3)(X + 2) \), donc \( \text{Sp}(A) = \{-2, 3\} \).\\
+			\( AX = 3X \) et \( AX = -2X \) $\Rightarrow$ 
+			
+			\[
+			E_3 = \mathrm{Vect}\left( \begin{pmatrix} 1 \\ 1 \end{pmatrix} \right)
+			\quad \text{et} \quad
+			E_{-2} = \mathrm{Vect}\left( \begin{pmatrix} 1 \\ -4 \end{pmatrix} \right).
+			\]
+			
+			\item Soit \( N = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \).\\
+			\( D = \begin{pmatrix} 3 & 0 \\ 0 & -2 \end{pmatrix} \)
+			\( ND = DN \) $\Rightarrow$ \\
+			\[
+			\begin{cases}
+				-2b = 3b \\
+				3c = -2c
+			\end{cases}
+			\]
+			\( A = PDP^{-1} \)
+			\[
+			P = \begin{pmatrix} 1 & 1 \\ 1 & -4 \end{pmatrix}, \quad D = \begin{pmatrix} 3 & 0 \\ 0 & -2 \end{pmatrix}.
+			\]
+			\( AM = MA \iff P^{-1}MP = \begin{pmatrix} a & 0 \\ 0 & d \end{pmatrix} \iff M = P \begin{pmatrix} a & 0 \\ 0 & d \end{pmatrix} P^{-1} \).
+		\end{enumerate}
+	\end{solution}
+
+	\section*{Exercice 74 \quad algèbre}
+	\begin{statement}
+		\begin{enumerate}
+			\item On considère la matrice \( A = \begin{pmatrix} 1 & 0 & 2 \\ 0 & 1 & 0 \\ 2 & 0 & 1 \end{pmatrix} \).
+			\begin{enumerate}
+				\item Justifier sans calcul que \( A \) est diagonalisable.
+				\item Déterminer les valeurs propres de \( A \) puis une base de vecteurs propres associés.
+			\end{enumerate}
+			\item On considère le système différentiel :
+			\[
+			\begin{cases}
+				x' = x + 2z \\
+				y' = y \\
+				z' = 2x + z
+			\end{cases}
+			\qquad x, y, z \text{ désignant trois fonctions de la variable } t,
+			\]
+			dérivables sur \( \mathbb{R} \).\\
+			En utilisant la question 1. et en le justifiant, résoudre ce système.
+		\end{enumerate}
+	\end{statement}
+\begin{solution}
+	\begin{enumerate}
+		\item
+		\[
+		\chi_A(\lambda) = (\lambda - 1)(\lambda + 1)(\lambda - 3)
+		\]
+		\[
+		E_1 = \mathrm{Vect}\left( \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} \right), \quad
+		E_{-1} = \mathrm{Vect}\left( \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix} \right), \quad
+		E_3 = \mathrm{Vect}\left( \begin{pmatrix} 1 \\ 0 \\ 1 \end{pmatrix} \right)
+		\]
+		
+		On pose donc la base propre :
+		\[
+		e'_1 = (0,1,0),\quad e'_2 = (1,0,-1),\quad e'_3 = (1,0,1)
+		\]
+		
+		La base \( e' = (e'_1, e'_2, e'_3) \) est une base de vecteurs propres de \( A \).
+		
+		\item
+		\[
+		X'(t) = AX(t) \iff P^{-1}X' = DP^{-1}X
+		\]
+		
+		On pose :
+		\[
+		X_1(t) = \begin{pmatrix} x_1(t) \\ y_1(t) \\ z_1(t) \end{pmatrix} = P^{-1}X(t)
+		\]
+		
+		On résout :
+		\[
+		\begin{cases}
+			x_1(t) = ae^t \\
+			y_1(t) = be^{-t} \\
+			z_1(t) = ce^{3t}
+		\end{cases}
+		\quad \text{avec } (a,b,c) \in \mathbb{R}^3
+		\]
+		
+		On remonte à \( X(t) = P X_1(t) \), ce qui donne :
+		\[
+		\boxed{
+			\begin{cases}
+				x(t) = be^{-t} + ce^{3t} \\
+				y(t) = ae^t \\
+				z(t) = -be^{-t} + ce^{3t}
+			\end{cases}
+			\quad \text{avec } (a,b,c) \in \mathbb{R}^3
+		}
+		\]
+		
+	\end{enumerate}
+\end{solution}
+
+\section*{Exercice 75 \quad algèbre}
+\begin{statement}
+	On considère la matrice \( A = \begin{pmatrix} -1 & -4 \\ 1 & 3 \end{pmatrix} \).
+	\begin{enumerate}
+		\item Démontrer que \( A \) n’est pas diagonalisable.
+		\item On note \( f \) l’endomorphisme de \( \mathbb{R}^2 \) canoniquement associé à \( A \).\\
+		Trouver une base \( (v_1, v_2) \) de \( \mathbb{R}^2 \) dans laquelle la matrice de \( f \) est de la forme
+		\[
+		\begin{pmatrix}
+			a & b \\
+			0 & c
+		\end{pmatrix}.
+		\]
+		On donnera explicitement les valeurs de \( a, b, c \).
+		\item En déduire la résolution du système différentiel
+		\[
+		\begin{cases}
+			x' = -x - 4y \\
+			y' = x + 3y
+		\end{cases}
+		\]
+	\end{enumerate}
+\end{statement}
+
+\begin{solution}
+	\begin{enumerate}
+		\item \[
+		\chi_A(X) = (X - 1)^2 \Rightarrow \text{Sp}A = \{1\}
+		\]
+		\item \[
+		E_1(A) = \mathrm{Vect} \left( \begin{pmatrix} 2 \\ -1 \end{pmatrix} \right)
+		\]
+		On choisit:
+		\[
+		v_1 = (2, -1), \quad v_2 = (-1, 0)
+		\]
+		la matrice de \( f \) 
+		\[
+		T = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}
+		\]
+		et la matrice de passage est :
+		\[
+		P = \begin{pmatrix} 2 & -1 \\ -1 & 0 \end{pmatrix}, \quad A = P T P^{-1}
+		\]
+		
+		\item \[
+		X' = A X \iff Y' = T Y
+		\]
+		ou :
+		\[
+		\begin{cases}
+			a'(t) = a(t) + b(t) \\
+			b'(t) = b(t)
+		\end{cases}
+		\]
+		De solution générale :
+		\[
+		\begin{cases}
+			b(t) = \mu e^{t} \\
+			a(t) = \lambda e^{t} + \mu t e^{t}
+		\end{cases}
+		\quad \text{avec } (\lambda, \mu) \in \mathbb{R}^2
+		\]
+		\( X = P Y \) donne :
+		\[
+		\begin{cases}
+			x(t) = ((2\lambda - \mu) + 2\mu t)e^{t} \\
+			y(t) = (-\lambda + \mu t)e^{t}
+		\end{cases}
+		\quad \text{avec } (\lambda, \mu) \in \mathbb{R}^2
+		\]
+	\end{enumerate}
+\end{solution}
+
+
+	
+	
+	% Back matter
+	\backmatter
+	% Bibliography, glossary and index would go here
+	
+\end{document}
